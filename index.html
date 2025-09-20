@@ -21,13 +21,13 @@
       position:relative;
     }
 
-    /* pétalos flotando */
     .petal-fall{
       position:absolute;width:22px;height:22px;background:var(--petal);
       border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
       opacity:0.8;
       animation:fall linear infinite;
       z-index:0;
+      pointer-events:none;
     }
     @keyframes fall{
       0%{transform:translateY(-10vh) rotate(0deg);opacity:1}
@@ -44,15 +44,28 @@
     .sub{color:#6b4b24;font-size:14px}
 
     .garden{
-      display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;padding:14px 4px
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap:12px;
+      padding:14px 4px;
+      align-items:start;
     }
 
     .flower{
-      --size:140px;
-      width:var(--size);height:var(--size);position:relative;display:flex;align-items:center;justify-content:center;
+      --size:140px; 
+      width:100%;
+      max-width:var(--size);
+      aspect-ratio:1/1;
+      height:auto;
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
       transform-origin:center bottom;
+      box-sizing:border-box;
+      margin-inline:auto;
     }
-    .stem{position:absolute;bottom:-10px;left:50%;width:6px;height:60%;background:linear-gradient(180deg,var(--stem),#2f8b3e);transform:translateX(-50%);border-radius:6px;z-index:0}
+    .stem{position:absolute;bottom:-8px;left:50%;width:6px;height:42%;background:linear-gradient(180deg,var(--stem),#2f8b3e);transform:translateX(-50%);border-radius:6px;z-index:0}
     .leaf{position:absolute;background:linear-gradient(180deg,#6ec46a,#2f8b3e);width:28px;height:14px;border-radius:20px;z-index:0;opacity:0.95}
     .leaf.left{left:10%;bottom:28%;transform:rotate(-30deg)}
     .leaf.right{right:10%;bottom:20%;transform:rotate(30deg)}
@@ -91,9 +104,10 @@
     .btn-heart:hover {transform: scale(1.1);background: #d62828;}
 
     @media (max-width:520px){
-      .flower{--size:110px}
       .garden{gap:8px}
       .btn-heart{font-size:16px;padding:10px 16px;margin-top:10px}
+      .flower{--size:120px}
+      .stem{height:36%}
     }
   </style>
   <audio id="bgMusic" autoplay loop muted>
@@ -111,7 +125,6 @@
   </script>
 </head>
 <body>
-  <!-- pétalos decorativos -->
   <div id="falling"></div>
 
   <div class="card" role="main">
@@ -136,8 +149,6 @@
       <div>Creado con ❤️ y con la esperanza de que pienses en mí</div>
       <div style="font-style:italic">Un pequeño jardín hecho con recuerdos</div>
     </footer>
-
-    <!-- Botón corazón -->
     <div class="text-center mt-3">
       <button class="btn-heart" data-bs-toggle="modal" data-bs-target="#mensajeModal">
         ❤️ Ver mensaje
@@ -171,8 +182,8 @@
       f.className = 'flower animate';
       f.style.setProperty('--size', size + 'px');
       f.style.setProperty('--dur', duration + 's');
-      f.style.transform = `translateY(${Math.random()*6 - 3}px)`;
-      f.style.rotate = tilt + 'deg';
+      const ty = (Math.random()*6 - 3).toFixed(2);
+      f.style.transform = `translateY(${ty}px) rotate(${tilt}deg)`;
 
       const stem = document.createElement('div');stem.className='stem';f.appendChild(stem);
       const l1 = document.createElement('div');l1.className='leaf left';f.appendChild(l1);
@@ -189,10 +200,13 @@
       return f;
     }
 
-    function populateGarden(n=8){
+    function populateGarden(base=9){
+      
+      const colsApprox = Math.max(2, Math.round(window.innerWidth / 140)); 
+      const count = Math.min(12, Math.max(4, colsApprox * 2)); 
       garden.innerHTML='';
-      for(let i=0;i<n;i++){
-        const size = 90 + Math.round(Math.random()*80);
+      for(let i=0;i<count;i++){
+        const size = 90 + Math.round(Math.random()*80); 
         const dur = 3.2 + Math.random()*2.8;
         const tilt = Math.round(Math.random()*8 -4);
         const f = makeFlower(size,dur,tilt);
@@ -201,6 +215,8 @@
     }
 
     function createFallingPetals(n=15){
+      
+      falling.innerHTML = '';
       for(let i=0;i<n;i++){
         const petal = document.createElement('div');
         petal.className = 'petal-fall';
@@ -211,8 +227,19 @@
       }
     }
 
+ 
     populateGarden(9);
     createFallingPetals(20);
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        populateGarden();
+        createFallingPetals(Math.min(30, Math.max(8, Math.round(window.innerWidth/80))));
+      }, 120);
+    });
   </script>
 </body>
 </html>
+

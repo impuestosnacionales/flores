@@ -3,10 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
   <title>Flores Amarillas para Mickaela</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     :root{
       --petal:#FFD54A;
@@ -15,11 +13,11 @@
       --accent:#FDE68A;
       --font: 'Segoe UI', Roboto, Arial, sans-serif;
     }
-    html,body{height:100%;margin:0;font-family:var(--font);overflow:hidden}
+    html,body{height:100%;margin:0;font-family:var(--font);overflow-x:hidden}
     body{
       background: linear-gradient(135deg, #fffbe9 0%, #ffeaa7 50%, #fddc5c 100%);
       background-attachment: fixed;
-      display:flex;align-items:center;justify-content:center;padding:32px;box-sizing:border-box;
+      display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;
       position:relative;
     }
 
@@ -29,6 +27,7 @@
       border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
       opacity:0.8;
       animation:fall linear infinite;
+      z-index:0;
     }
     @keyframes fall{
       0%{transform:translateY(-10vh) rotate(0deg);opacity:1}
@@ -36,16 +35,16 @@
     }
 
     .card{
-      width:960px;max-width:100%;background:rgba(255,255,255,0.55);backdrop-filter:blur(10px);
-      border-radius:20px;padding:28px;box-shadow:0 12px 40px rgba(0,0,0,0.12);
+      width:100%;max-width:960px;background:rgba(255,255,255,0.55);backdrop-filter:blur(10px);
+      border-radius:20px;padding:20px;box-shadow:0 12px 40px rgba(0,0,0,0.12);
       z-index:1;position:relative;
     }
-    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-    .title{font-size:22px;font-weight:700;color:#5a3d00}
+    header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .title{font-size:20px;font-weight:700;color:#5a3d00}
     .sub{color:#6b4b24;font-size:14px}
 
     .garden{
-      display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:20px;padding:14px 8px
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;padding:14px 4px
     }
 
     .flower{
@@ -73,30 +72,31 @@
     .flower:hover{filter:brightness(1.06);transform:scale(1.04)}
 
     .messageBox{margin-top:14px;padding:16px;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,0.65),rgba(255,255,255,0.4));text-align:center;box-shadow:0 6px 20px rgba(0,0,0,0.08)}
-    .messageBox h2{margin:6px 0;font-size:24px;color:#5a3d00}
+    .messageBox h2{margin:6px 0;font-size:22px;color:#5a3d00}
     .messageBox p{margin:6px 0;color:#4b3b22;font-size:15px;line-height:1.4}
 
-    footer{margin-top:16px;font-size:13px;color:#5a3d00;display:flex;justify-content:space-between;align-items:center}
-    @media (max-width:520px){.flower{--size:110px}.garden{gap:12px}}
+    footer{margin-top:16px;font-size:13px;color:#5a3d00;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
 
-        .btn-heart {
-    background: #e63946;
-    color: #fff;
-    border: none;
-    border-radius: 50px;
-    padding: 12px 20px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: transform 0.2s ease, background 0.3s ease;
+    .btn-heart {
+      background: #e63946;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+      display:inline-block;
     }
-    .btn-heart:hover {
-    transform: scale(1.1);
-    background: #d62828;
-    }
+    .btn-heart:hover {transform: scale(1.1);background: #d62828;}
 
+    @media (max-width:520px){
+      .flower{--size:110px}
+      .garden{gap:8px}
+      .btn-heart{font-size:16px;padding:10px 16px;margin-top:10px}
+    }
   </style>
-</head>
-<audio id="bgMusic" autoplay loop muted>
+  <audio id="bgMusic" autoplay loop muted>
     <source src="Por eso canto.mp3" type="audio/mpeg">
   </audio>
   <script>
@@ -109,8 +109,7 @@
       }
     }, { once: true });
   </script>
-  <!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
 <body>
   <!-- pétalos decorativos -->
   <div id="falling"></div>
@@ -121,29 +120,51 @@
         <div class="title">Flores amarillas para Mickaela</div>
         <div class="sub">Aunque no hablemos, aún te extraño</div>
       </div>
+      <div class="sub">Fecha: <strong>21 de septiembre</strong></div>
     </header>
 
     <div class="garden" id="garden"></div>
 
     <div class="messageBox">
       <h2>Para Mickaela</h2>
-      <p>Aun no es 21 de septiembre pero te regalo flores amarillas.</p>
+      <p>Hoy es 21 de septiembre y te regalo flores amarillas.</p>
       <p>Aunque ya no hablemos, quiero que sepas que aún te pienso y te extraño.</p>
       <p>Quizás ya no sientas nada por mí, pero mi cariño sigue aquí.</p>
-      <div class="text-center mt-3">
-        <button class="btn-heart" data-bs-toggle="modal" data-bs-target="#mensajeModal">
-          ❤️ Ver mensaje
-        </button>
-      </div>
-      
     </div>
 
     <footer>
       <div>Creado con ❤️ y con la esperanza de que pienses en mí</div>
       <div style="font-style:italic">Un pequeño jardín hecho con recuerdos</div>
     </footer>
+
+    <!-- Botón corazón -->
+    <div class="text-center mt-3">
+      <button class="btn-heart" data-bs-toggle="modal" data-bs-target="#mensajeModal">
+        ❤️ Ver mensaje
+      </button>
+    </div>
   </div>
 
+  <!-- Modal -->
+  <div class="modal fade" id="mensajeModal" tabindex="-1" aria-labelledby="mensajeLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="border-radius: 16px;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="mensajeLabel">🌻 Mensaje para Mickaela</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Aquí pones tu mensaje personalizado -->
+          <p>Hola, se que esto es algo repentino y que probablemente ahora mismo tu estes bien sin mi, pero yo no. Cometi muchos errores y no se como demostrarte que genuinamente estoy cambiando, no quiero que esto acabe asi, pero si asi debe ser, entonces asi sera, eres alguien muy especial en mi vida y todos los dias te extraño y te pienso, se que ahora mismo lo ultimo que quieres es saber de mi, pues tu ya estas pensando en rehacer tu vida con otra persona, pero yo aun te extraño, y te escribo cartas, cartas que nunca te llegaran pues se que no voy a volver a verte, quiza esto sea lo ultimo que veas de mi, pero espero que sepas que yo te amo, y te ame mucho, te extraño y no quiero perderte de nuevo, te necesito, me haces falta, eres mi razon de ser, y si esto es rogar, pues te rogare toda la vida, no puedo seguir sin ti, y me vale si todos me dicen que eres mala, para mi eres perfecta, no tienes por que contestarme, se que ahora eres feliz, pero necesito que sepas que yo sigo aqui, te extraño, te amo, te necesito, y por eso ahora te dejo tranquila, feliz inicio de primavera, que la pases bonito, y sean felices.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     const garden = document.getElementById('garden');
     const falling = document.getElementById('falling');
@@ -182,7 +203,6 @@
       }
     }
 
-    // crear pétalos que caen
     function createFallingPetals(n=15){
       for(let i=0;i<n;i++){
         const petal = document.createElement('div');
@@ -197,23 +217,5 @@
     populateGarden(9);
     createFallingPetals(20);
   </script>
-    <div class="modal fade" id="mensajeModal" tabindex="-1" aria-labelledby="mensajeLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="border-radius: 16px;">
-            <div class="modal-header">
-            <h5 class="modal-title" id="mensajeLabel">🌻 Mensaje para Mickaela</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-            <!-- Aquí pones tu mensaje personalizado -->
-            <p>Hola, se que esto es algo repentino y que probablemente ahora mismo tu estes bien sin mi, pero yo no. Cometi muchos errores y no se como demostrarte que genuinamente estoy cambiando, no quiero que esto acabe asi, pero si asi debe ser, entonces asi sera, eres alguien muy especial en mi vida y todos los dias te extraño y te pienso, se que ahora mismo lo ultimo que quieres es saber de mi, pues tu ya estas pensando en rehacer tu vida con otra persona, pero yo aun te extraño, y te escribo cartas, cartas que nunca te llegaran pues se que no voy a volver a verte, quiza esto sea lo ultimo que veas de mi, pero espero que sepas que yo te amo, y te ame mucho, te extraño y no quiero perderte de nuevo, te necesito, me haces falta, eres mi razon de ser, y si esto es rogar, pues te rogare toda la vida, no puedo seguir sin ti, y me vale si todos me dicen que eres mala, para mi eres perfecta, no tienes por que contestarme, se que ahora eres feliz, pero necesito que sepas que yo sigo aqui, te extraño, te amo, te necesito, y por eso ahora te dejo tranquila, feliz inicio de primavera, que la pases bonito, y sean felices.</p>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-        </div>
-    </div>
-    
 </body>
 </html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Flores Amarillas para Mickaela</title>
+  <style>
+    :root{
+      --bg-1:#FFF9E6;
+      --bg-2:#FFF1C2;
+      --petal:#FFD54A;
+      --center:#FFB300;
+      --stem:#6BBF59;
+      --accent:#FDE68A;
+      --font: 'Segoe UI', Roboto, Arial, sans-serif;
+    }
+    html,body{height:100%;margin:0;font-family:var(--font)}
+    body{
+      background:linear-gradient(180deg,var(--bg-1),var(--bg-2));
+      display:flex;align-items:center;justify-content:center;padding:32px;box-sizing:border-box
+    }
+    .card{
+      width:960px;max-width:100%;background:rgba(255,255,255,0.65);backdrop-filter:blur(6px);
+      border-radius:16px;padding:20px;box-shadow:0 8px 30px rgba(20,20,20,0.08);
+    }
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .title{font-size:20px;font-weight:700;color:#6b4b00}
+    .sub{color:#5b4b24;font-size:13px}
+
+    .garden{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:18px;padding:10px 6px
+    }
+
+    .flower{
+      --size:140px;
+      width:var(--size);height:var(--size);position:relative;display:flex;align-items:center;justify-content:center;
+      transform-origin:center bottom;
+    }
+    .stem{position:absolute;bottom:-10px;left:50%;width:6px;height:60%;background:linear-gradient(180deg,var(--stem),#2f8b3e);transform:translateX(-50%);border-radius:6px;z-index:0}
+    .leaf{position:absolute;background:linear-gradient(180deg,#6ec46a,#2f8b3e);width:28px;height:14px;border-radius:20px;z-index:0;opacity:0.95}
+    .leaf.left{left:10%;bottom:28%;transform:rotate(-30deg)}
+    .leaf.right{right:10%;bottom:20%;transform:rotate(30deg)}
+    .petal{position:absolute;width:56%;height:56%;background:var(--petal);border-radius:60% 60% 20% 20%/70% 70% 30% 30%;box-shadow:inset -6px -6px 12px rgba(0,0,0,0.06), 0 6px 12px rgba(0,0,0,0.06);transform-origin:bottom center;transition:transform .3s ease;opacity:0.98}
+    .petal.p1{transform:rotate(0deg)  translateY(-18%)}
+    .petal.p2{transform:rotate(60deg) translateY(-18%)}
+    .petal.p3{transform:rotate(120deg) translateY(-18%)}
+    .petal.p4{transform:rotate(180deg) translateY(-18%)}
+    .petal.p5{transform:rotate(240deg) translateY(-18%)}
+    .petal.p6{transform:rotate(300deg) translateY(-18%)}
+    .center{width:36%;height:36%;background:radial-gradient(circle at 35% 30%,var(--accent),var(--center));border-radius:50%;z-index:2;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,0.08)}
+    .center .dots{position:relative;width:72%;height:72%}
+    .center .dots::after{content:'';position:absolute;inset:18% 18% 18% 18%;border-radius:50%;background:rgba(0,0,0,0.06)}
+
+    @keyframes sway{0%{transform:rotate(-2deg)}50%{transform:rotate(3deg)}100%{transform:rotate(-2deg)}}
+    .flower.animate{animation:sway var(--dur,4s) ease-in-out infinite}
+    .flower:hover{filter:brightness(1.03);transform:scale(1.02)}
+
+    .controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+    .btn{background:#ffd54a;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700}
+
+    .messageBox{margin-top:14px;padding:10px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.5),rgba(255,255,255,0.35));text-align:center}
+    .messageBox h2{margin:6px 0;font-size:22px;color:#6b4b00}
+    .messageBox p{margin:4px 0;color:#4b3b22;font-size:15px}
+
+    footer{margin-top:12px;font-size:12px;color:#6b4b00;display:flex;justify-content:space-between;align-items:center}
+    @media (max-width:520px){.flower{--size:110px}.garden{gap:12px}}
+  </style>
+</head>
+<body>
+  <div class="card" role="main">
+    <header>
+      <div>
+        <div class="title">Mickaela</div>
+        <div class="sub">Aunque no hablemos, aún te extraño</div>
+      </div>
+      <div class="sub">Fecha: <strong>21 de septiembre</strong></div>
+    </header>
+
+    <div class="garden" id="garden"></div>
+
+    <div class="messageBox">
+      <h2>Para Mickaela</h2>
+      <p>Hoy es 21 de septiembre y te regalo flores amarillas.</p>
+      <p>Aunque ya no hablemos, quiero que sepas que aún te pienso y te extraño.</p>
+      <p>Quizás ya no sientas nada por mí, pero mi cariño sigue aquí.</p>
+    </div>
+
+    <footer>
+      <div>Creado con ❤️ y con la esperanza de que pienses en mí</div>
+      <div style="font-style:italic">Un pequeño jardín hecho con recuerdos</div>
+    </footer>
+  </div>
+
+  <script>
+    const garden = document.getElementById('garden');
+
+    function makeFlower(size=140, duration=4, tilt=0){
+      const f = document.createElement('div');
+      f.className = 'flower animate';
+      f.style.setProperty('--size', size + 'px');
+      f.style.setProperty('--dur', duration + 's');
+      f.style.transform = `translateY(${Math.random()*6 - 3}px)`;
+      f.style.rotate = tilt + 'deg';
+
+      const stem = document.createElement('div');stem.className='stem';f.appendChild(stem);
+      const l1 = document.createElement('div');l1.className='leaf left';f.appendChild(l1);
+      const l2 = document.createElement('div');l2.className='leaf right';f.appendChild(l2);
+
+      for(let i=1;i<=6;i++){
+        const p=document.createElement('div');p.className='petal p'+i;f.appendChild(p);
+      }
+      const c=document.createElement('div');c.className='center';
+      const dots=document.createElement('div');dots.className='dots';c.appendChild(dots);
+      f.appendChild(c);
+
+      f.style.animationDelay = (Math.random()*-2) + 's';
+      return f;
+    }
+
+    function populateGarden(n=8){
+      garden.innerHTML='';
+      for(let i=0;i<n;i++){
+        const size = 90 + Math.round(Math.random()*80);
+        const dur = 3.2 + Math.random()*2.8;
+        const tilt = Math.round(Math.random()*8 -4);
+        const f = makeFlower(size,dur,tilt);
+        garden.appendChild(f);
+      }
+    }
+
+    populateGarden(9);
+  </script>
+</body>
+</html>
